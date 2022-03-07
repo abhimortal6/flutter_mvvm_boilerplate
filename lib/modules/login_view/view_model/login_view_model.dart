@@ -73,6 +73,8 @@ class LoginViewModel with ChangeNotifier {
   }
 
   changeLocale(BuildContext context) {
+    currentLanguage = context.locale;
+
     if (currentLanguage == LocaleConstants.ENGLISH) {
       EasyLocalization.of(context)!.setLocale(LocaleConstants.HINDI);
     } else if (currentLanguage == LocaleConstants.HINDI) {
@@ -80,5 +82,7 @@ class LoginViewModel with ChangeNotifier {
     } else if (currentLanguage == LocaleConstants.KANNADA) {
       EasyLocalization.of(context)!.setLocale(LocaleConstants.ENGLISH);
     }
+    currentLanguage = context.locale;
+    notifyListeners();
   }
 }

@@ -24,7 +24,7 @@ void main() async {
 
   //Localisation
   await EasyLocalization.ensureInitialized();
-  // EasyLocalization.logger.enableLevels = [];
+  EasyLocalization.logger.enableLevels = [];
 
   ///Sets Status Bar Color
   // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: ));

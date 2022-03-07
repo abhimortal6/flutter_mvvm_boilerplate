@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_mvvm_boilerplate/modules/custom_url/view_model/custom_url_view_model.dart';
 import 'package:flutter_mvvm_boilerplate/modules/login_view/view_model/login_view_model.dart';
 import 'package:flutter_mvvm_boilerplate/modules/custom_url/view/custom_url_view.dart';
@@ -13,6 +14,13 @@ import 'package:provider/provider.dart';
 ///
 ///
 class NavigationHelper {
+  static final NavigationHelper instance = NavigationHelper._internal();
+
+  NavigationHelper._internal();
+
+  final GlobalKey<NavigatorState> navigationKey =
+      new GlobalKey<NavigatorState>();
+
   static getCustomURLViewWithProvider() {
     return MultiProvider(
       providers: [

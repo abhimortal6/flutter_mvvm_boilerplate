@@ -13,8 +13,8 @@ void main() async {
   //
   Widget _defaultHome =
       AppConstants.isCustomURLBuild && !AppConstants.isProdBuild
-          ? NavigationHelper.getCustomURLViewWithProvider()
-          : NavigationHelper.getLoginViewWithProvider();
+          ?  NavigationHelper.viewModelsMapper[CustomURLView.TAG]!
+          :  NavigationHelper.viewModelsMapper[LoginView.TAG]!;
 
   WidgetsFlutterBinding.ensureInitialized();
   //Locks orientation
@@ -40,9 +40,9 @@ void main() async {
             ///Home Route is Denoted as /
             ///Set tag in view itself, so it can be used directly maintaining consistency.
             CustomURLView.TAG: (context) =>
-                NavigationHelper.getCustomURLViewWithProvider(),
+                NavigationHelper.viewModelsMapper[CustomURLView.TAG]!,
             LoginView.TAG: (context) =>
-                NavigationHelper.getLoginViewWithProvider(),
+            NavigationHelper.viewModelsMapper[LoginView.TAG]!,
           },
         )),
   );

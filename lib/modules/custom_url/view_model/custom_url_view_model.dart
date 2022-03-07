@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_boilerplate/utils/constants/api_constants.dart';
 import 'package:flutter_mvvm_boilerplate/utils/constants/singleton_constant.dart';
+import 'package:flutter_mvvm_boilerplate/utils/navigation_helper.dart';
 import 'package:flutter_mvvm_boilerplate/utils/shared_preferences_helper.dart';
 import 'package:flutter_mvvm_boilerplate/modules/login_view/view/login_view.dart';
 import 'package:flutter_mvvm_boilerplate/modules/common/views/alert_bar.dart';
@@ -8,7 +9,7 @@ import 'package:flutter_mvvm_boilerplate/modules/common/views/alert_bar.dart';
 class CustomURLViewModel with ChangeNotifier {
   TextEditingController urlTextFieldController = TextEditingController();
 
-  //Check if custom URL was set previously if true then re-set it in texfield
+  //Check if custom URL was set previously if true then re-set it in text field
   void checkIfURLSetPreviously() async {
     String? url = await SharedPreferencesHelper.getCustomURL();
     if (url != null) {
@@ -25,11 +26,15 @@ class CustomURLViewModel with ChangeNotifier {
     }
     SingletonConstants().setBaseUrl(urlTextFieldController.text.trim());
     SharedPreferencesHelper.setCustomURL(urlTextFieldController.text.trim());
-    Navigator.pushNamedAndRemoveUntil(context, LoginView.TAG, (route) => false);
+    NavigationHelper.instance.goToScreen(
+      screenName: LoginView.TAG,
+    );
   }
 
   void setStaging({required BuildContext context}) async {
     SingletonConstants().setBaseUrl(ApiConstants.SERVER_BASE_URL);
-    Navigator.pushNamedAndRemoveUntil(context, LoginView.TAG, (route) => false);
+    NavigationHelper.instance.goToScreen(
+      screenName: LoginView.TAG,
+    );
   }
 }

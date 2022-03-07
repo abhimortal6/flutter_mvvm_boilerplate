@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_boilerplate/utils/constants/app_constants.dart';
 import 'package:flutter_mvvm_boilerplate/utils/constants/color_constants.dart';
@@ -54,14 +55,21 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    if (_viewModel == null) _viewModel = Provider.of<LoginViewModel>(context);
-
+    if (_viewModel == null)
+      _viewModel = Provider.of<LoginViewModel>(context)..init(context);
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _viewModel!.changeLocale(context);
+        },
+        child: Text(_viewModel!.currentLanguage.languageCode),
+      ),
+
       ///This flag will allow to ignore Keyboard Overflow.
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
-          AppConstants.APP_NAME,
+          AppConstants.APP_NAME.tr(),
           style: TextStyle(fontFamily: FontFamilyConstants.PLAY_FAIR_DISPLAY),
         ),
       ),

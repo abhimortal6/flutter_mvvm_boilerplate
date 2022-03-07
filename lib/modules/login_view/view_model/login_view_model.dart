@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_mvvm_boilerplate/modules/common/models/login_model.dart';
@@ -6,16 +7,22 @@ import 'package:flutter_mvvm_boilerplate/modules/common/models/response_data_mod
 import 'package:flutter_mvvm_boilerplate/services/api_service.dart';
 import 'package:flutter_mvvm_boilerplate/utils/constants/app_constants.dart';
 import 'package:flutter_mvvm_boilerplate/utils/constants/color_constants.dart';
+import 'package:flutter_mvvm_boilerplate/utils/constants/locale_constants.dart';
 import 'package:flutter_mvvm_boilerplate/utils/shared_preferences_helper.dart';
 import 'package:flutter_mvvm_boilerplate/modules/common/views/alert_bar.dart';
 
 class LoginViewModel with ChangeNotifier {
   ApiStatus loadingStatus = ApiStatus.idle;
+  Locale currentLanguage = LocaleConstants.ENGLISH;
 
   TextEditingController emailTextFieldController =
       TextEditingController(text: "eve.holt@reqres.in");
   TextEditingController passwordTextFieldController =
       TextEditingController(text: "cityslicka");
+
+  init(BuildContext context) {
+    currentLanguage = context.locale;
+  }
 
   void loginUser(
       {required BuildContext context,
@@ -63,5 +70,15 @@ class LoginViewModel with ChangeNotifier {
 
     loadingStatus = ApiStatus.idle;
     notifyListeners();
+  }
+
+  changeLocale(BuildContext context) {
+    if (currentLanguage == LocaleConstants.ENGLISH) {
+      EasyLocalization.of(context)!.setLocale(LocaleConstants.HINDI);
+    } else if (currentLanguage == LocaleConstants.HINDI) {
+      EasyLocalization.of(context)!.setLocale(LocaleConstants.KANNADA);
+    } else if (currentLanguage == LocaleConstants.KANNADA) {
+      EasyLocalization.of(context)!.setLocale(LocaleConstants.ENGLISH);
+    }
   }
 }

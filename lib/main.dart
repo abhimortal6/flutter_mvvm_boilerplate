@@ -13,14 +13,18 @@ void main() async {
   //
   Widget _defaultHome =
       AppConstants.isCustomURLBuild && !AppConstants.isProdBuild
-          ?  NavigationHelper.viewModelsMapper[CustomURLView.TAG]!
-          :  NavigationHelper.viewModelsMapper[LoginView.TAG]!;
+          ? NavigationHelper.viewModelsMapper[CustomURLView.TAG]!
+          : NavigationHelper.viewModelsMapper[LoginView.TAG]!;
 
   WidgetsFlutterBinding.ensureInitialized();
   //Locks orientation
   //Can be changed at runtime via same method.
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
+  //Localisation
+  await EasyLocalization.ensureInitialized();
+  // EasyLocalization.logger.enableLevels = [];
 
   ///Sets Status Bar Color
   // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: ));
@@ -30,20 +34,34 @@ void main() async {
         supportedLocales: LocaleConstants.SUPPORTED_LOCALES,
         path: 'assets/localisation',
         fallbackLocale: LocaleConstants.ENGLISH,
-        child: MaterialApp(
-          navigatorKey: NavigationHelper.instance.navigationKey,
-          title: AppConstants.APP_NAME,
-          debugShowCheckedModeBanner: false,
-          routes: {
-            '/': (context) => _defaultHome,
-
-            ///Home Route is Denoted as /
-            ///Set tag in view itself, so it can be used directly maintaining consistency.
-            CustomURLView.TAG: (context) =>
-                NavigationHelper.viewModelsMapper[CustomURLView.TAG]!,
-            LoginView.TAG: (context) =>
-            NavigationHelper.viewModelsMapper[LoginView.TAG]!,
-          },
-        )),
+        child: MyApp(_defaultHome)),
   );
+}
+
+class MyApp extends StatelessWidget {
+  MyApp(this.defaultHome);
+
+  final Widget defaultHome;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      navigatorKey: NavigationHelper.instance.navigationKey,
+      title: AppConstants.APP_NAME,
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
+      routes: {
+        '/': (context) => defaultHome,
+
+        ///Home Route is Denoted as /
+        ///Set tag in view itself, so it can be used directly maintaining consistency.
+        CustomURLView.TAG: (context) =>
+            NavigationHelper.viewModelsMapper[CustomURLView.TAG]!,
+        LoginView.TAG: (context) =>
+            NavigationHelper.viewModelsMapper[LoginView.TAG]!,
+      },
+    );
+  }
 }

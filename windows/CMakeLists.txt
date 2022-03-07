@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
-project(flutter_boilerplate_master LANGUAGES CXX)
+project(flutter_boilerplate LANGUAGES CXX)
 
-set(BINARY_NAME "flutter_boilerplate_master")
+set(BINARY_NAME "flutter_boilerplate")
 
 cmake_policy(SET CMP0063 NEW)
 

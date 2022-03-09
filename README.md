@@ -41,10 +41,6 @@ Maintained by  - [Abhijeet Tripathi](https://github.com/abhimortal6)
 ## 1. Initial Setup
 
 1. Clone this repo
-```sh
-    git clone https://github.com/joshsoftware/flutter-boilerplate.git
-```
-
 2. Rename "**flutter-boilerplate**" folder to your "**project_name**"
 3.  Open folder in Android Studio
 4. Open project's pubspec.yaml and change

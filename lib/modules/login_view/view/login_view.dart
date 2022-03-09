@@ -47,7 +47,7 @@ class _LoginViewState extends State<LoginView> {
         return CommonButton(
           title: "Login with Widget Specific Loader",
           function: () {
-            loginViewModel.loginUser(context: context);
+            loginViewModel.loginUser();
           },
         );
     }
@@ -95,8 +95,7 @@ class _LoginViewState extends State<LoginView> {
           CommonButton(
             title: "Login with Common Loader",
             function: () {
-              _viewModel!
-                  .loginUser(context: context, logInWithCommonLoader: true);
+              _viewModel!.loginUser(logInWithCommonLoader: true);
             },
           )
         ],

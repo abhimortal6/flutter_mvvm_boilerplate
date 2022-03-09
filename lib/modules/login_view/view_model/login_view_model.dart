@@ -8,6 +8,7 @@ import 'package:flutter_mvvm_boilerplate/services/api_service.dart';
 import 'package:flutter_mvvm_boilerplate/utils/constants/app_constants.dart';
 import 'package:flutter_mvvm_boilerplate/utils/constants/color_constants.dart';
 import 'package:flutter_mvvm_boilerplate/utils/constants/locale_constants.dart';
+import 'package:flutter_mvvm_boilerplate/utils/navigation_helper.dart';
 import 'package:flutter_mvvm_boilerplate/utils/shared_preferences_helper.dart';
 import 'package:flutter_mvvm_boilerplate/modules/common/views/alert_bar.dart';
 
@@ -24,19 +25,29 @@ class LoginViewModel with ChangeNotifier {
     currentLanguage = context.locale;
   }
 
-  void loginUser(
-      {required BuildContext context,
-      bool logInWithCommonLoader: false}) async {
+  bool validate() {
     if (emailTextFieldController.text.isEmpty) {
-      AlertBar.show(context,
+      return false;
+    }
+    if (passwordTextFieldController.text.isEmpty) {
+      return false;
+    }
+
+    return true;
+  }
+
+  void loginUser({bool logInWithCommonLoader: false}) async {
+    if (emailTextFieldController.text.isEmpty) {
+      AlertBar.show(NavigationHelper.instance.navigationKey.currentContext!,
           title: "Enter email", description: "Please enter a Email");
       return;
     }
     if (passwordTextFieldController.text.isEmpty) {
-      AlertBar.show(context,
+      AlertBar.show(NavigationHelper.instance.navigationKey.currentContext!,
           title: "Enter password", description: "Please enter a Password");
       return;
     }
+
     if (!logInWithCommonLoader) {
       loadingStatus = ApiStatus.started;
       notifyListeners();
@@ -47,7 +58,7 @@ class LoginViewModel with ChangeNotifier {
         password: passwordTextFieldController.text);
 
     ResponseData responseData = await ApiService().loginUser(
-        context: context,
+        context: NavigationHelper.instance.navigationKey.currentContext!,
         loginModel: _loginModel,
         logInWithCommonLoader: logInWithCommonLoader);
 
@@ -56,7 +67,7 @@ class LoginViewModel with ChangeNotifier {
       loadingStatus = ApiStatus.completed;
       String token = jsonDecode(responseData.rawResponseBody!)['token'];
       SharedPreferencesHelper.setAuthToken(token);
-      AlertBar.show(context,
+      AlertBar.show(NavigationHelper.instance.navigationKey.currentContext!,
           title: "Done",
           description: "Login Successful Token: $token",
           backgroundColor: ColorConstants.GREEN);

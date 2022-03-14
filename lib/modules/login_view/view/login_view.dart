@@ -1,8 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_mvvm_boilerplate/utils/constants/app_constants.dart';
-import 'package:flutter_mvvm_boilerplate/utils/constants/color_constants.dart';
-import 'package:flutter_mvvm_boilerplate/utils/constants/font_family_constants.dart';
+import 'package:flutter_mvvm_boilerplate/constants/app_constants.dart';
+import 'package:flutter_mvvm_boilerplate/constants/color_constants.dart';
+import 'package:flutter_mvvm_boilerplate/constants/font_family_constants.dart';
 import 'package:flutter_mvvm_boilerplate/modules/login_view/view_model/login_view_model.dart';
 import 'package:flutter_mvvm_boilerplate/modules/common/views/common_button.dart';
 import 'package:flutter_mvvm_boilerplate/modules/common/views/common_text_field.dart';

@@ -1,12 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_mvvm_boilerplate/utils/constants/app_constants.dart';
-import 'package:flutter_mvvm_boilerplate/utils/constants/locale_constants.dart';
-import 'package:flutter_mvvm_boilerplate/utils/navigation_helper.dart';
+import 'package:flutter_mvvm_boilerplate/constants/app_constants.dart';
+import 'package:flutter_mvvm_boilerplate/constants/locale_constants.dart';
+import 'package:flutter_mvvm_boilerplate/helpers/navigation_helper.dart';
 import 'package:flutter_mvvm_boilerplate/modules/custom_url/view/custom_url_view.dart';
 import 'package:flutter_mvvm_boilerplate/modules/login_view/view/login_view.dart';
-import 'package:flutter_mvvm_boilerplate/utils/shared_preferences_helper.dart';
+import 'package:flutter_mvvm_boilerplate/helpers/shared_preferences_helper.dart';
 
 void main() async {
   //Check if custom URL flag is set and make safe check for production

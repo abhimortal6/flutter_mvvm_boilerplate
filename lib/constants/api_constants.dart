@@ -1,5 +1,5 @@
-import 'package:flutter_mvvm_boilerplate/utils/constants/app_constants.dart';
-import 'package:flutter_mvvm_boilerplate/utils/constants/singleton_constant.dart';
+import 'package:flutter_mvvm_boilerplate/constants/app_constants.dart';
+import 'package:flutter_mvvm_boilerplate/constants/singleton_constant.dart';
 
 ///Api Paths are set here
 class ApiConstants {

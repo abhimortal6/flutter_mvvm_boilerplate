@@ -7,11 +7,11 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mvvm_boilerplate/constants/locale_constants.dart';
 import 'package:flutter_mvvm_boilerplate/main.dart';
 import 'package:flutter_mvvm_boilerplate/modules/login_view/view/login_view.dart';
 import 'package:flutter_mvvm_boilerplate/modules/login_view/view_model/login_view_model.dart';
-import 'package:flutter_mvvm_boilerplate/utils/constants/locale_constants.dart';
-import 'package:flutter_mvvm_boilerplate/utils/navigation_helper.dart';
+import 'package:flutter_mvvm_boilerplate/helpers/navigation_helper.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

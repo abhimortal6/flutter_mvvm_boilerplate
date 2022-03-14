@@ -31,11 +31,7 @@ class ResponseData {
           (response.statusCode == 200 || response.statusCode == 201) &&
               (parsedJson['entity'] != null),
       message: parsedJson['message'] != null ? parsedJson['message'] : "",
-      errors: parsedJson['errors'] != null
-          ? parsedJson['errors'].runtimeType == String
-              ? new ResponseErrors(message: parsedJson['errors'])
-              : ResponseErrors.fromJson(parsedJson['errors'])
-          : parsedJson['error'] != null
+      errors: parsedJson['error'] != null
               ? ResponseErrors(message: parsedJson['error'])
               : null,
     );

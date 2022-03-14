@@ -2,14 +2,14 @@ import 'dart:convert';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_mvvm_boilerplate/constants/app_constants.dart';
+import 'package:flutter_mvvm_boilerplate/constants/color_constants.dart';
+import 'package:flutter_mvvm_boilerplate/constants/locale_constants.dart';
 import 'package:flutter_mvvm_boilerplate/modules/common/models/login_model.dart';
 import 'package:flutter_mvvm_boilerplate/modules/common/models/response_data_model.dart';
 import 'package:flutter_mvvm_boilerplate/services/api_service.dart';
-import 'package:flutter_mvvm_boilerplate/utils/constants/app_constants.dart';
-import 'package:flutter_mvvm_boilerplate/utils/constants/color_constants.dart';
-import 'package:flutter_mvvm_boilerplate/utils/constants/locale_constants.dart';
-import 'package:flutter_mvvm_boilerplate/utils/navigation_helper.dart';
-import 'package:flutter_mvvm_boilerplate/utils/shared_preferences_helper.dart';
+import 'package:flutter_mvvm_boilerplate/helpers/navigation_helper.dart';
+import 'package:flutter_mvvm_boilerplate/helpers/shared_preferences_helper.dart';
 import 'package:flutter_mvvm_boilerplate/modules/common/views/alert_bar.dart';
 
 class LoginViewModel with ChangeNotifier {

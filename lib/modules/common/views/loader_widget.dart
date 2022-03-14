@@ -9,14 +9,14 @@ class LoaderWidget {
   static void showLoader(BuildContext context) {
     FocusScope.of(context).requestFocus(new FocusNode());
 
-    hideLoader(context);
+    hideLoader();
 
     _overlayEntry = createOverlayEntry(context);
     Overlay.of(context)!.insert(_overlayEntry);
     _onScreen = true;
   }
 
-  static void hideLoader(BuildContext? context) {
+  static void hideLoader() {
     if (_onScreen) {
       _overlayEntry.remove();
       _onScreen = false;

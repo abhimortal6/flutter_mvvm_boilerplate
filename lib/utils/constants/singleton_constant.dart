@@ -14,9 +14,12 @@ class SingletonConstants {
   String? _baseUrl;
   String? _authToken;
 
-  String? getBaseUrl() => _baseUrl != null ? _baseUrl : ApiConstants.SERVER_BASE_URL;
+  String? getBaseUrl() =>
+      _baseUrl != null ? _baseUrl : ApiConstants.SERVER_BASE_URL;
 
   void setBaseUrl(String baseURL) => _baseUrl = baseURL;
 
-  Future<String?> get getToken async => _authToken != null ? _authToken : await SharedPreferencesHelper.getAuthTokenWithNullCheck();
+  String? get getToken => _authToken != null
+      ? _authToken
+      : SharedPreferencesHelper.getAuthTokenWithNullCheck();
 }

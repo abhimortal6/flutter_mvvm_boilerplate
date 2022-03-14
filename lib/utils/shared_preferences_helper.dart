@@ -5,34 +5,35 @@ class SharedPreferencesHelper {
   static final String _authToken = "authToken";
   static final String _customURL = "customURL";
 
-  static Future<String?> getAuthToken() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+  static late final SharedPreferences prefs;
+
+
+  static initialise()async{
+    prefs = await SharedPreferences.getInstance();
+  }
+
+  static String? getAuthToken()  {
     return prefs.getString(_authToken);
   }
 
   //Returns empty String if token is not set
-  static Future<String> getAuthTokenWithNullCheck() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+  static String getAuthTokenWithNullCheck()  {
     return prefs.getString(_authToken) ?? "";
   }
 
-  static Future<bool> setAuthToken(String value) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+  static Future<bool> setAuthToken(String value){
     return prefs.setString(_authToken, value);
   }
 
   static Future<bool> clearAuthToken() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.remove(_authToken);
   }
 
-  static Future<String?> getCustomURL() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+  static String? getCustomURL() {
     return prefs.getString(_customURL);
   }
 
-  static Future<bool> setCustomURL(String value) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
+  static Future<bool> setCustomURL(String value)  {
     return prefs.setString(_customURL, value);
   }
 }

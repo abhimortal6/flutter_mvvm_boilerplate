@@ -6,6 +6,7 @@ import 'package:flutter_mvvm_boilerplate/utils/constants/locale_constants.dart';
 import 'package:flutter_mvvm_boilerplate/utils/navigation_helper.dart';
 import 'package:flutter_mvvm_boilerplate/modules/custom_url/view/custom_url_view.dart';
 import 'package:flutter_mvvm_boilerplate/modules/login_view/view/login_view.dart';
+import 'package:flutter_mvvm_boilerplate/utils/shared_preferences_helper.dart';
 
 void main() async {
   //Check if custom URL flag is set and make safe check for production
@@ -25,6 +26,8 @@ void main() async {
   //Localisation
   await EasyLocalization.ensureInitialized();
   EasyLocalization.logger.enableLevels = [];
+
+  await SharedPreferencesHelper.initialise();
 
   ///Sets Status Bar Color
   // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: ));

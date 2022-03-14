@@ -9,6 +9,7 @@ import 'package:flutter_mvvm_boilerplate/modules/common/views/alert_bar.dart';
 ///Things to change:
 ///              1. Message Alert widget - can be left default, change as per UI design.
 ///
+
 class NetworkCheck {
   static Future<bool> check() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
@@ -21,7 +22,7 @@ class NetworkCheck {
     return false;
   }
 
-  static Future<bool> isOnline(BuildContext? context, bool showError) async {
+  static Future<bool> isOnline({required BuildContext context,  bool showError = true}) async {
     var connectivityResult = await (Connectivity().checkConnectivity());
     if (connectivityResult == ConnectivityResult.mobile) {
       return true;
@@ -30,7 +31,7 @@ class NetworkCheck {
     }
     debugPrint("No Internet");
     if (showError)
-      AlertBar.show(context!,
+      AlertBar.show(context,
           title: 'No Connectivity',
           description: 'Please Check Internet Connection',
           gravity: AlertBar.TOP,

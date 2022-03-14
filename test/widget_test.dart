@@ -23,16 +23,15 @@ void main() {
     loginViewModel.emailTextFieldController.clear();
     loginViewModel.passwordTextFieldController.clear();
 
-    test('It should return false when user and pass is empty', () async {
+    test('It should return false when user and pass is empty', () {
       bool result = loginViewModel.validate();
       expect(result, false);
     });
 
-    test('It should return true when user and pass is not empty', () async {
+    test('It should return true when user and pass is not empty', () {
       loginViewModel.emailTextFieldController.text = "SomeMail@mail.com";
       loginViewModel.passwordTextFieldController.text = "SomePassword";
       bool result = loginViewModel.validate();
-
       expect(result, true);
     });
   });

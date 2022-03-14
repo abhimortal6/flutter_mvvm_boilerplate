@@ -12,6 +12,8 @@ import 'package:http/http.dart' as http;
 class HttpHelper {
   final int _TIME_OUT_DURATION = 45; //in seconds
 
+  List<int> _okCodes = [200, 201];
+
   Map<String, String> _generateHeaders({bool useAuth: true}) {
     return {
       'Content-Type': 'application/json',
@@ -19,8 +21,6 @@ class HttpHelper {
           useAuth ? 'Bearer ' + (SingletonConstants().getToken ?? "") : "",
     };
   }
-
-  List<int> _okCodes = [200, 201];
 
   _handleSuccess({
     required http.Response response,
@@ -77,20 +77,15 @@ class HttpHelper {
   }) async {
     ResponseData responseData = ResponseData.fromResponse(response);
 
+    if (showLog) {
+      debugPrint("Request failed with status: ${response.statusCode}.");
+      debugPrint("Error:${response.reasonPhrase}");
+      debugPrint("$responseName Response:${response.body}");
+    }
+
     if (response.statusCode == 401) {
-      if (showLog) {
-        debugPrint("Request failed with status: ${response.statusCode}.");
-        debugPrint("Error:${response.reasonPhrase}");
-        debugPrint("$responseName Response:${response.body}");
-      }
       //TODO: Logout
     } else {
-      if (showLog) {
-        debugPrint("Request failed with status: ${response.statusCode}.");
-        debugPrint("Error:${response.reasonPhrase}");
-        debugPrint("$responseName Response:${response.body}");
-      }
-
       if (showMessage) {
         if (responseData.message != null)
           AlertBar.show(context,
@@ -117,7 +112,7 @@ class HttpHelper {
     required RequestMethod method,
     required String requestUrl,
     BuildContext? context,
-    Map? map,
+    Map? body,
     bool showError: false,
     bool showMessage: false,
     bool checkNetwork: true,
@@ -143,7 +138,7 @@ class HttpHelper {
     if (showLog) {
       debugPrint("Requested URL: " + requestUrl);
       debugPrint("Method: " + method.name);
-      debugPrint("Map: $map");
+      debugPrint("Body: $body");
     }
 
     if (checkNetwork &&
@@ -152,7 +147,7 @@ class HttpHelper {
       if (showLoader!) _showLoader(_context);
       var jsonBody;
       Uri uri = Uri.parse(requestUrl);
-      if (map != null) jsonBody = JsonEncoder().convert(map);
+      if (body != null) jsonBody = JsonEncoder().convert(body);
 
       switch (method) {
         case RequestMethod.get:

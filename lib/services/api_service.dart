@@ -14,7 +14,7 @@ class ApiService {
     return HttpHelper().httpRequest(
         method: RequestMethod.post,
         requestUrl: _uri,
-        map: loginModel.toMap(),
+        body: loginModel.toMap(),
         useAuth: false,
         showLoader: logInWithCommonLoader,
         responseName: "Login",

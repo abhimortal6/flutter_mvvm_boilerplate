@@ -44,11 +44,21 @@ class _LoginViewState extends State<LoginView> {
         );
 
       default:
-        return CommonButton(
-          title: "Login with Widget Specific Loader",
-          function: () {
-            loginViewModel.loginUser();
-          },
+        return Column(
+          children: [
+            CommonButton(
+              title: "Login with Widget Specific Loader",
+              function: () {
+                loginViewModel.loginUser();
+              },
+            ),
+            CommonButton(
+              title: "Login with Common Loader",
+              function: () {
+                _viewModel!.loginUser(logInWithCommonLoader: true);
+              },
+            )
+          ],
         );
     }
   }
@@ -92,12 +102,6 @@ class _LoginViewState extends State<LoginView> {
             controller: _viewModel!.passwordTextFieldController,
           ),
           _buildSubmitButton(_viewModel!),
-          CommonButton(
-            title: "Login with Common Loader",
-            function: () {
-              _viewModel!.loginUser(logInWithCommonLoader: true);
-            },
-          )
         ],
       ),
     );

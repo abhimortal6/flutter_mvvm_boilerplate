@@ -6,9 +6,7 @@ import 'package:flutter_mvvm_boilerplate/helpers/http_helper.dart';
 
 class ApiService {
   Future<ResponseData> loginUser(
-      {required BuildContext context,
-      required LoginModel loginModel,
-      bool? logInWithCommonLoader}) {
+      {required LoginModel loginModel, bool? logInWithCommonLoader}) {
     String _uri = baseURL! + ApiConstants.LOGIN;
 
     return HttpHelper().httpRequest(

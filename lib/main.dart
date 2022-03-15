@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mvvm_boilerplate/constants/app_constants.dart';
 import 'package:flutter_mvvm_boilerplate/constants/locale_constants.dart';
 import 'package:flutter_mvvm_boilerplate/helpers/navigation_helper.dart';
+import 'package:flutter_mvvm_boilerplate/modules/common/views/loader_widget.dart';
 import 'package:flutter_mvvm_boilerplate/modules/custom_url/view/custom_url_view.dart';
 import 'package:flutter_mvvm_boilerplate/modules/login_view/view/login_view.dart';
 import 'package:flutter_mvvm_boilerplate/helpers/shared_preferences_helper.dart';
@@ -54,6 +55,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
+      builder: LoaderWidget.transitionBuilder(),
       locale: context.locale,
       routes: {
         '/': (context) => defaultHome,

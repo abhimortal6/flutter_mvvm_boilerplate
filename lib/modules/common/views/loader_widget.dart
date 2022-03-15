@@ -1,44 +1,158 @@
+import 'dart:async';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 class LoaderWidget {
-  static late OverlayEntry _overlayEntry;
-  static bool _onScreen = false;
+  Widget? _widget;
 
-  static bool isLoaderOn() => _onScreen;
+  LoaderOverlayEntry? overlayEntry;
+  Widget? get w => _widget;
 
-  static void showLoader(BuildContext context) {
-    FocusScope.of(context).requestFocus(new FocusNode());
+  factory LoaderWidget() => _instance;
+  static final LoaderWidget _instance = LoaderWidget._internal();
 
-    hideLoader();
+  LoaderWidget._internal();
 
-    _overlayEntry = createOverlayEntry(context);
-    Overlay.of(context)!.insert(_overlayEntry);
-    _onScreen = true;
+  static LoaderWidget get instance => _instance;
+
+  static bool get onScreen => _instance.w != null;
+
+  static TransitionBuilder init({
+    TransitionBuilder? builder,
+  }) {
+    return (BuildContext context, Widget? child) {
+      if (builder != null) {
+        return builder(context, LoaderOverlay(child: child));
+      } else {
+        return LoaderOverlay(child: child);
+      }
+    };
   }
 
-  static void hideLoader() {
-    if (_onScreen) {
-      _overlayEntry.remove();
-      _onScreen = false;
+  ///Duration in milliseconds
+  static showLoader() {
+    Widget w = Material(
+        elevation: 0.0,
+        color: Colors.black38,
+        child: Center(
+          child: Container(
+            alignment: Alignment.center,
+            color: Colors.black26,
+            child: CircularProgressIndicator(),
+          ),
+        ));
+
+    SchedulerBinding.instance
+        ?.addPostFrameCallback((_) => _instance._show(widget: w));
+
+    _instance._show(widget: w);
+  }
+
+  static Future<void> hideLoader() {
+    return _instance._dismiss();
+  }
+
+  _show({Widget? widget}) async {
+    _widget = widget;
+
+    _markNeedsBuild();
+  }
+
+  Future<void> _dismiss() async {
+    _widget = null;
+    _markNeedsBuild();
+  }
+
+  void _markNeedsBuild() {
+    overlayEntry?.markNeedsBuild();
+  }
+
+  static TransitionBuilder transitionBuilder({
+    TransitionBuilder? builder,
+  }) {
+    return (BuildContext context, Widget? child) {
+      if (builder != null) {
+        return builder(
+          context,
+          MediaQuery(
+            child: LoaderOverlay(child: child),
+            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+          ),
+        );
+      } else {
+        // return LoaderOverlay(child: child);
+        return MediaQuery(
+          child: LoaderOverlay(child: child),
+          data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+        );
+      }
+    };
+  }
+}
+
+class LoaderOverlayEntry extends OverlayEntry {
+  final WidgetBuilder builder;
+
+  LoaderOverlayEntry({
+    required this.builder,
+  }) : super(builder: builder);
+
+  @override
+  void markNeedsBuild() {
+    if (SchedulerBinding.instance?.schedulerPhase ==
+        SchedulerPhase.persistentCallbacks) {
+      SchedulerBinding.instance?.addPostFrameCallback((_) {});
+      super.markNeedsBuild();
+    } else {
+      super.markNeedsBuild();
     }
   }
+}
 
-  //Loader can be changed from here
-  static OverlayEntry createOverlayEntry(BuildContext context) {
-    return OverlayEntry(
-        builder: (context) => Positioned(
-              bottom: 0,
-              top: 0,
-              left: 0,
-              right: 0,
-              child: Material(
-                  elevation: 0.0,
-                  color: Colors.transparent,
-                  child: Container(
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
-                  )),
-            ));
+class LoaderOverlay extends StatefulWidget {
+  final Widget? child;
+
+  const LoaderOverlay({
+    Key? key,
+    required this.child,
+  })  : assert(child != null),
+        super(key: key);
+
+  @override
+  _LoaderOverlayState createState() => _LoaderOverlayState();
+}
+
+class _LoaderOverlayState extends State<LoaderOverlay> {
+  late LoaderOverlayEntry _overlayEntry;
+
+  @override
+  void initState() {
+    super.initState();
+    _overlayEntry = LoaderOverlayEntry(
+      builder: (BuildContext context) => LoaderWidget.instance.w ?? Container(),
+    );
+    LoaderWidget.instance.overlayEntry = _overlayEntry;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      child: Overlay(
+        initialEntries: [
+          LoaderOverlayEntry(
+            builder: (BuildContext context) {
+              if (widget.child != null) {
+                return widget.child!;
+              } else {
+                return Container();
+              }
+            },
+          ),
+          _overlayEntry,
+        ],
+      ),
+    );
   }
 }

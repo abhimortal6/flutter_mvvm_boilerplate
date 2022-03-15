@@ -58,9 +58,7 @@ class LoginViewModel with ChangeNotifier {
         password: passwordTextFieldController.text);
 
     ResponseData responseData = await ApiService().loginUser(
-        context: NavigationHelper.instance.navigationKey.currentContext!,
-        loginModel: _loginModel,
-        logInWithCommonLoader: logInWithCommonLoader);
+        loginModel: _loginModel, logInWithCommonLoader: logInWithCommonLoader);
 
     if (responseData.ok) {
       //TODO: Push to next screen

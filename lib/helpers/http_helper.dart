@@ -101,7 +101,7 @@ class HttpHelper {
   }
 
   _showLoader(BuildContext context) {
-    LoaderWidget.showLoader(context);
+    LoaderWidget.showLoader();
   }
 
   _hideLoader() {
@@ -122,7 +122,7 @@ class HttpHelper {
     String responseName: "",
     bool showLog: true,
   }) async {
-    BuildContext _context;
+    BuildContext? _context;
     ResponseData responseData = ResponseData();
 
     if (context == null) {
@@ -156,7 +156,7 @@ class HttpHelper {
               .timeout(Duration(seconds: _TIME_OUT_DURATION))
               .then((http.Response response) async {
             _handleResponse(
-                context: _context,
+                context: _context!,
                 response: response,
                 showError: showError,
                 showMessage: showMessage,
@@ -178,7 +178,7 @@ class HttpHelper {
               .timeout(Duration(seconds: _TIME_OUT_DURATION))
               .then((http.Response response) async {
             _handleResponse(
-                context: _context,
+                context: _context!,
                 response: response,
                 showError: showError,
                 showMessage: showMessage,
@@ -200,7 +200,7 @@ class HttpHelper {
               .timeout(Duration(seconds: _TIME_OUT_DURATION))
               .then((http.Response response) async {
             _handleResponse(
-                context: _context,
+                context: _context!,
                 response: response,
                 showError: showError,
                 showMessage: showMessage,
@@ -222,7 +222,7 @@ class HttpHelper {
               .timeout(Duration(seconds: _TIME_OUT_DURATION))
               .then((http.Response response) async {
             _handleResponse(
-                context: _context,
+                context: _context!,
                 response: response,
                 showError: showError,
                 showMessage: showMessage,
@@ -244,7 +244,7 @@ class HttpHelper {
               .timeout(Duration(seconds: _TIME_OUT_DURATION))
               .then((http.Response response) async {
             _handleResponse(
-                context: _context,
+                context: _context!,
                 response: response,
                 showError: showError,
                 showMessage: showMessage,
